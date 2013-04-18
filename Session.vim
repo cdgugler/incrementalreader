@@ -63,6 +63,7 @@ map \mbu <Plug>UMiniBufExplorer
 map \mbc <Plug>CMiniBufExplorer
 map \mbe <Plug>MiniBufExplorer
 map \n :NERDTreeToggle
+map \c A;O
 map \d :bd
 map \  :TMiniBufExplorer
 map \e :e.
@@ -71,8 +72,6 @@ map \\ :bn
 map \fp :set ft=php
 map \fj :set ft=javascript
 map \fh :set ft=html
-map \ce A**/
-map \cs I/**
 map \t :tabnew
 nmap gx <Plug>NetrwBrowseX
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
@@ -139,13 +138,13 @@ set wildmenu
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd ~/Dropbox/chrome-ext
+cd ~/Dropbox/ireader
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 content.js
-badd +1 eventPage.js
+badd +0 content.js
+badd +0 eventPage.js
 badd +0 popup.js
 badd +0 manifest.json
 badd +0 popup.html
@@ -167,34 +166,6 @@ enew
 file -MiniBufExplorer-
 let s:cpo_save=&cpo
 set cpo&vim
-inoremap <buffer> <Plug>delimitMateJumpMany =len(b:_l_delimitMate_buffer) ? delimitMate#Finish(0) : delimitMate#JumpMany()
-imap <buffer> <RightMouse> <Plug>delimitMateMRightMouse
-imap <buffer> <LeftMouse> <Plug>delimitMateMLeftMouse
-imap <buffer> <S-Up> <Plug>delimitMateS-Up
-imap <buffer> <S-Down> <Plug>delimitMateS-Down
-imap <buffer> <PageDown> <Plug>delimitMatePageDown
-imap <buffer> <PageUp> <Plug>delimitMatePageUp
-imap <buffer> <C-ScrollWheelRight> <Plug>delimitMateC-ScrollWheelRight
-imap <buffer> <S-ScrollWheelRight> <Plug>delimitMateS-ScrollWheelRight
-imap <buffer> <ScrollWheelRight> <Plug>delimitMateScrollWheelRight
-imap <buffer> <C-ScrollWheelLeft> <Plug>delimitMateC-ScrollWheelLeft
-imap <buffer> <S-ScrollWheelLeft> <Plug>delimitMateS-ScrollWheelLeft
-imap <buffer> <ScrollWheelLeft> <Plug>delimitMateScrollWheelLeft
-imap <buffer> <C-ScrollWheelDown> <Plug>delimitMateC-ScrollWheelDown
-imap <buffer> <S-ScrollWheelDown> <Plug>delimitMateS-ScrollWheelDown
-imap <buffer> <ScrollWheelDown> <Plug>delimitMateScrollWheelDown
-imap <buffer> <C-ScrollWheelUp> <Plug>delimitMateC-ScrollWheelUp
-imap <buffer> <S-ScrollWheelUp> <Plug>delimitMateS-ScrollWheelUp
-imap <buffer> <ScrollWheelUp> <Plug>delimitMateScrollWheelUp
-imap <buffer> <C-Right> <Plug>delimitMateC-Right
-imap <buffer> <C-Left> <Plug>delimitMateC-Left
-imap <buffer> <End> <Plug>delimitMateEnd
-imap <buffer> <Home> <Plug>delimitMateHome
-imap <buffer> <Right> <Plug>delimitMateRight
-imap <buffer> <Left> <Plug>delimitMateLeft
-imap <buffer> <Del> <Plug>delimitMateDel
-imap <buffer> <S-BS> <Plug>delimitMateS-BS
-imap <buffer> <BS> <Plug>delimitMateBS
 nnoremap <buffer> 	 :call search('\[[0-9]*:[^\]]*\]'):<BS>
 nnoremap <buffer> h :call search('\[[0-9]*:[^\]]*\]','b'):<BS>
 nnoremap <buffer> j gj
@@ -204,10 +175,6 @@ nnoremap <buffer> p :wincmd p:<BS>
 nnoremap <buffer> <S-Tab> :call search('\[[0-9]*:[^\]]*\]','b'):<BS>
 nnoremap <buffer> <Up> gk
 nnoremap <buffer> <Down> gj
-imap <buffer> <silent> g <Plug>delimitMateJumpMany
-imap <buffer> " <Plug>delimitMate"
-imap <buffer> ' <Plug>delimitMate'
-imap <buffer> ` <Plug>delimitMate`
 let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
@@ -462,11 +429,11 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 11 - ((10 * winheight(0) + 24) / 49)
+let s:l = 1 - ((0 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-11
+1
 normal! 0
 wincmd w
 2wincmd w

@@ -3,8 +3,6 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action == "reqLoc")
     {
         var location = window.pageYOffset || document.documentElement.scrollTop;
-        console.log("This is the content script saying: ");
-        console.log(location);
         sendResponse({location: location});
     } else if (request.action == "scroll") {
         tabid = request.tabid;

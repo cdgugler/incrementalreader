@@ -4,54 +4,23 @@ var readingList = document.querySelector('ul.reading-list');
 var toRead = [];
 var storage = chrome.storage.local;
 
+var background = chrome.extension.getBackgroundPage();
+window.addEventListener("unload", function (event) {
+    background.console.log(event.type);
+});
+
 function gogogo() {
-    var id = this.parentNode.dataset.id;
-    var location = toRead[id].location;
-    // console.log(this.href);
-    chrome.extension.sendMessage({action: "scroll", location: location }, function(response) {
+    var id = this.parentNode.dataset.id,
+        location = toRead[id].location,
+        url = this.href;
+    // send open request to eventPage
+    chrome.extension.sendMessage({action: "openReadItem", location: toRead[id]["location"], url:url }, function(response) {
         console.log(response);
-    });
-    chrome.tabs.create({
-        url: this.href
-    }, function (tab) {
-        // tabid = tab.id;
-        // console.log("Sending message to chrome ext:");
-        // chrome.extension.sendMessage({action: "scroll", location: location, tab: tabid }, function(response) {
-        //     console.log(response);
-        // });
-
-        // chrome.tabs.onUpdated.addListener(function(tab, changeInfo) {
-        //     console.log("Added Listener.");
-        //     if (changeInfo.status === 'complete') {
-        //         console.log("Scrolling...");
-        //         chrome.tabs.sendMessage(tab, {action: "scroll", location: location}, function(response) {});
-        //     }
-        // });
-
-        // get the new window and scroll to the last location
-        // chrome.tabs.query({
-        //     active: true,
-        //     windowId: chrome.windows.WINDOW_ID_CURRENT
-        // }, 
-        // function (tabsArray) {
-        //     var tab = tabsArray[0];
-        //     var theTab = tab.id;
-
-        //     chrome.tabs.onUpdated.addListener(function(theTab, changeInfo) {
-        //         // console.log("Listener added.");
-        //         if (changeInfo.status === 'complete') {
-        //             console.log("Trying to scroll!");
-        //             chrome.tabs.sendMessage(theTab, {action: "scroll", location: location}, function(response) {
-        //             });
-        //         }
-        //     });
-        // });
-
     });
 }
 function addToRead(toRead) {
-  // Save it using the Chrome extension storage API.
-  storage.set({'toRead': toRead}, function() {
+    // Save it using the Chrome extension storage API.
+    storage.set({'toRead': toRead}, function() {
     // Notify that we saved.
     console.log('Success!');
   });
