@@ -4,9 +4,10 @@ var readingList = document.querySelector('ul.reading-list');
 var toRead = [];
 var storage = chrome.storage.local;
 
+// notify eventPage when popup closed to clean up list and save
 var background = chrome.extension.getBackgroundPage();
 window.addEventListener("unload", function (event) {
-    background.console.log(event.type);
+    background.console.log("Popup closed.");
 });
 
 function gogogo() {
@@ -18,36 +19,40 @@ function gogogo() {
         console.log(response);
     });
 }
+// updates local storage 
 function addToRead(toRead) {
     // Save it using the Chrome extension storage API.
     storage.set({'toRead': toRead}, function() {
     // Notify that we saved.
-    console.log('Success!');
+    console.log('Saved to Local storage!');
   });
 }
+// removes item from popup.html & local storage
 function removeItem() {
+    // parent is LI element
     var parent = this.parentNode;
-    console.log(parent);
     parent.innerHTML = '';
-    var id = parent.dataset.id;
-    toRead.splice(id, 1);
+    // var id = parent.dataset.id;
+    // toRead.splice(id, 1);
+    var url = parent.dataset.url,
+        loc = parent.dataset.loc;
+    // remove item by url & loc as those should be unique
+    // removing by id scuffles up the current list on the page
+    for (var i = 0; i < toRead.length; i++) {
+        if (toRead[i].url == url && toRead[i].location == loc) {
+            console.log("Found match!");
+            toRead.splice(i, 1);
+            break;
+        }
+    }
     addToRead(toRead);
     parent.parentNode.removeChild(parent);
-}
-
-function makePretty (id, url, title) {
-    var prettyText = 
-        '<li data-id="' + id + '">' +
-        '<a href="#" class="remove-item">X</a> '
-        + '<a href="' + url + '">' + title + '</a></li>';
-    return prettyText;
 }
 
 function populateList (toRead) {
     for (var i = 0; i < toRead.length; i++)
     {
-        // var prettyText = makePretty(i, toRead[i].url, toRead[i].title);
-        var newItem = document.createElement("li");
+        var newLi = document.createElement("li");
         var deleteAnchor = document.createElement("a");
         var newAnchor = document.createElement("a");
         var newText = document.createTextNode(toRead[i].title);
@@ -56,15 +61,17 @@ function populateList (toRead) {
         newAnchor.addEventListener('click', gogogo);
         deleteAnchor.addEventListener('click', removeItem);
         deleteAnchor.href = "#";
-        newItem.setAttribute('data-id', i);
+        newLi.setAttribute('data-id', i);
+        newLi.setAttribute('data-url', toRead[i].url);
+        newLi.setAttribute('data-loc', toRead[i].location);
         newAnchor.href = toRead[i].url;
         deleteAnchor.className = "remove-item";
 
         newAnchor.appendChild(newText);
         deleteAnchor.appendChild(deleteX);
-        newItem.appendChild(deleteAnchor);
-        newItem.appendChild(newAnchor);
-        readingList.appendChild(newItem);
+        newLi.appendChild(deleteAnchor);
+        newLi.appendChild(newAnchor);
+        readingList.appendChild(newLi);
     }
 }
 

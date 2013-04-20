@@ -19,6 +19,8 @@
     },
     "permissions": [
         "tabs",
-        "storage"
+        "storage",
+        "unlimitedStorage",
+        "contextMenus"
     ]
 }

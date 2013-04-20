@@ -14,6 +14,18 @@ chrome.tabs.onUpdated.addListener(function(tab, changeInfo) {
     }
 });
 
+// context menu to save selections
+var highlighter = chrome.contextMenus.create( { "title": "Highlight Text",
+                                                "contexts": ["selection"],
+                                                "onclick": highlightText } );
+// handle highlights
+function highlightText (info, tab) {
+    console.log(info.selectionText);
+    console.log(info.pageUrl);
+    console.log(info.parentMenuItemId);
+    chrome.tabs.sendMessage(tab.id, { action: "getSelection"});
+}
+
 var iReader = {
     // list of items to read later, array of objects, {url, title, location}
     readItems: [],
