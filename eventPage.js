@@ -22,7 +22,7 @@ var highlighter = chrome.contextMenus.create( { "title": "Highlight Text",
 function highlightText (info, tab) {
     console.log(info.selectionText);
     console.log(info.pageUrl);
-    console.log(info.parentMenuItemId);
+    // console.log(info.parentMenuItemId);
     chrome.tabs.sendMessage(tab.id, { action: "getSelection"});
 }
 
