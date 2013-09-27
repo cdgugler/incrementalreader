@@ -10,6 +10,8 @@ of incremental reading, see [wikipedia](http://en.wikipedia.org/wiki/Incremental
 Currently the plugin is early early alpha-no incremental reading specific features have been 
 built into the plugin yet.
 
+Project site: [Incremental Reader](http://addlime.dev/projects/incremental-reader-chrome-plugin/)
+
 ### v0.1 - Initial alpha. Working.
 * Saves websites in local storage.
 * Scrolls back to approximate last location when returning to saved page.
