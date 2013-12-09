@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Incremental Reader",
-    "description": "Keep your place and highlighting to read articles later.",
+    "description": "Keep your place and save notes from websites.",
     "version": "0.1",
     "browser_action": {
         "default_icon": "icon.png",

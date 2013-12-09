@@ -2,29 +2,16 @@ let SessionLoad = 1
 if &cp | set nocp | endif
 let s:cpo_save=&cpo
 set cpo&vim
-inoremap <C-Space> 
+inoremap <silent> <Plug>delimitMate> =delimitMate#JumpOut("\>")
+inoremap <silent> <Plug>delimitMate< =delimitMate#ParenDelim(">")
+inoremap <Nul> 
 inoremap <expr> <Up> pumvisible() ? "\" : "\<Up>"
 inoremap <expr> <S-Tab> pumvisible() ? "\" : "\<S-Tab>"
 inoremap <expr> <Down> pumvisible() ? "\" : "\<Down>"
-inoremap <Plug>ZenCodingAnchorizeSummary :call zencoding#anchorizeURL(1)a
-inoremap <Plug>ZenCodingAnchorizeURL :call zencoding#anchorizeURL(0)a
-inoremap <Plug>ZenCodingRemoveTag :call zencoding#removeTag()a
-inoremap <Plug>ZenCodingSplitJoinTagInsert :call zencoding#splitJoinTag()
-inoremap <Plug>ZenCodingToggleComment :call zencoding#toggleComment()a
-inoremap <Plug>ZenCodingImageSize :call zencoding#imageSize()a
-inoremap <Plug>ZenCodingPrev :call zencoding#moveNextPrev(1)
-inoremap <Plug>ZenCodingNext :call zencoding#moveNextPrev(0)
-inoremap <Plug>ZenCodingBalanceTagOutwardInsert :call zencoding#balanceTag(-1)
-inoremap <Plug>ZenCodingBalanceTagInwardInsert :call zencoding#balanceTag(1)
-inoremap <Plug>ZenCodingExpandWord u:call zencoding#expandAbbr(1,"")a
-inoremap <Plug>ZenCodingExpandAbbr u:call zencoding#expandAbbr(0,"")a
-inoremap <silent> <Plug>delimitMateMRightMouse =delimitMate#Finish(1)<RightMouse>
-inoremap <silent> <Plug>delimitMateMLeftMouse =delimitMate#Finish(1)<LeftMouse>
-inoremap <silent> <Plug>delimitMateDel =delimitMate#Del()
-inoremap <silent> <Plug>delimitMateS-Tab =delimitMate#JumpAny("\<S-Tab>")
+inoremap <silent> <Plug>delimitMateS-Tab =delimitMate#JumpAny()
 inoremap <silent> <Plug>delimitMateSpace =delimitMate#ExpandSpace()
 inoremap <silent> <Plug>delimitMateCR =delimitMate#ExpandReturn()
-inoremap <silent> <expr> <Plug>delimitMateS-BS delimitMate#WithinEmptyPair() ? "\=delimitMate#Del()\" : "\<S-BS>"
+inoremap <silent> <expr> <Plug>delimitMateS-BS delimitMate#WithinEmptyPair() ? "\<Del>" : "\<S-BS>"
 inoremap <silent> <Plug>delimitMateBS =delimitMate#BS()
 inoremap <silent> <Plug>delimitMate` =delimitMate#QuoteDelim("\`")
 inoremap <silent> <Plug>delimitMate' =delimitMate#QuoteDelim("\'")
@@ -32,106 +19,97 @@ inoremap <silent> <Plug>delimitMate" =delimitMate#QuoteDelim("\"")
 inoremap <silent> <Plug>delimitMate] =delimitMate#JumpOut("\]")
 inoremap <silent> <Plug>delimitMate} =delimitMate#JumpOut("\}")
 inoremap <silent> <Plug>delimitMate) =delimitMate#JumpOut("\)")
-inoremap <silent> <Plug>delimitMate[ [=delimitMate#ParenDelim("]")
-inoremap <silent> <Plug>delimitMate{ {=delimitMate#ParenDelim("}")
-inoremap <silent> <Plug>delimitMate( (=delimitMate#ParenDelim(")")
+inoremap <silent> <Plug>delimitMate[ =delimitMate#ParenDelim("]")
+inoremap <silent> <Plug>delimitMate{ =delimitMate#ParenDelim("}")
+inoremap <silent> <Plug>delimitMate( =delimitMate#ParenDelim(")")
 inoremap <silent> <C-Tab> =UltiSnips_ListSnippets()
 snoremap <silent>  c
 nmap 	 :call SwitchBuffer()
 xnoremap <NL> :call UltiSnips_SaveLastVisualSelection()gvs
 snoremap <silent> <NL> :call UltiSnips_ExpandSnippetOrJump()
 snoremap <silent>  :call UltiSnips_JumpBackwards()
-vmap c <Plug>ZenCodingCodePretty
-vmap m <Plug>ZenCodingMergeLines
-vmap D <Plug>ZenCodingBalanceTagOutwardVisual
-vmap d <Plug>ZenCodingBalanceTagInwardVisual
-vmap , <Plug>ZenCodingExpandVisual
-nmap A <Plug>ZenCodingAnchorizeSummary
-nmap a <Plug>ZenCodingAnchorizeURL
-nmap k <Plug>ZenCodingRemoveTag
-nmap j <Plug>ZenCodingSplitJoinTagNormal
-nmap / <Plug>ZenCodingToggleComment
-nmap i <Plug>ZenCodingImageSize
-nmap N <Plug>ZenCodingPrev
-nmap n <Plug>ZenCodingNext
-nmap D <Plug>ZenCodingBalanceTagOutwardNormal
-nmap d <Plug>ZenCodingBalanceTagInwardNormal
-nmap , <Plug>ZenCodingExpandNormal
-map \mq <Plug>MBEMarkCurrent
-map \mbt <Plug>TMiniBufExplorer
-map \mbu <Plug>UMiniBufExplorer
-map \mbc <Plug>CMiniBufExplorer
-map \mbe <Plug>MiniBufExplorer
-map \n :NERDTreeToggle
-map \c A;O
-map \d :bd
-map \  :TMiniBufExplorer
-map \e :e.
-map \| :bp
-map \\ :bn
-map \fp :set ft=php
-map \fj :set ft=javascript
-map \fh :set ft=html
-map \t :tabnew
+xmap S <Plug>VSurround
+xmap [% [%m'gv``
+nmap \qq :q!
+xmap \qq :q!
+omap \qq :q!
+nmap \n :NERDTreeToggle
+xmap \n :NERDTreeToggle
+omap \n :NERDTreeToggle
+nmap \c A;O
+xmap \c A;O
+omap \c A;O
+nmap \d :bd
+xmap \d :bd
+omap \d :bd
+nmap \  :TMiniBufExplorer
+xmap \  :TMiniBufExplorer
+omap \  :TMiniBufExplorer
+nmap \e :e.
+xmap \e :e.
+omap \e :e.
+nmap \| :bp
+xmap \| :bp
+omap \| :bp
+nmap \\ :bn
+xmap \\ :bn
+omap \\ :bn
+nmap \fp :set ft=php
+xmap \fp :set ft=php
+omap \fp :set ft=php
+nmap \fj :set ft=javascript
+xmap \fj :set ft=javascript
+omap \fj :set ft=javascript
+nmap \fh :set ft=html
+xmap \fh :set ft=html
+omap \fh :set ft=html
+nmap \t :tabnew
+xmap \t :tabnew
+omap \t :tabnew
+xmap ]% ]%m'gv``
+xmap a% [%v]%
+nmap cs <Plug>Csurround
+nmap ds <Plug>Dsurround
 nmap gx <Plug>NetrwBrowseX
+xmap gS <Plug>VgSurround
+nmap ySS <Plug>YSsurround
+nmap ySs <Plug>YSsurround
+nmap yss <Plug>Yssurround
+nmap yS <Plug>YSurround
+nmap ys <Plug>Ysurround
 nnoremap <silent> <Plug>NetrwBrowseX :call netrw#NetrwBrowseX(expand("<cWORD>"),0)
-vnoremap <Plug>ZenCodingCodePretty :call zencoding#codePretty()
-vnoremap <Plug>ZenCodingMergeLines :call zencoding#mergeLines()
-vnoremap <Plug>ZenCodingBalanceTagOutwardVisual :call zencoding#balanceTag(-2)
-vnoremap <Plug>ZenCodingBalanceTagInwardVisual :call zencoding#balanceTag(2)
-vnoremap <Plug>ZenCodingExpandVisual :call zencoding#expandAbbr(2,"")
-nnoremap <Plug>ZenCodingAnchorizeSummary :call zencoding#anchorizeURL(1)
-nnoremap <Plug>ZenCodingAnchorizeURL :call zencoding#anchorizeURL(0)
-nnoremap <Plug>ZenCodingRemoveTag :call zencoding#removeTag()
-nnoremap <Plug>ZenCodingSplitJoinTagNormal :call zencoding#splitJoinTag()
-nnoremap <Plug>ZenCodingToggleComment :call zencoding#toggleComment()
-nnoremap <Plug>ZenCodingImageSize :call zencoding#imageSize()
-nnoremap <Plug>ZenCodingPrev :call zencoding#moveNextPrev(1)
-nnoremap <Plug>ZenCodingNext :call zencoding#moveNextPrev(0)
-nnoremap <Plug>ZenCodingBalanceTagOutwardNormal :call zencoding#balanceTag(-1)
-nnoremap <Plug>ZenCodingBalanceTagInwardNormal :call zencoding#balanceTag(1)
-nnoremap <Plug>ZenCodingExpandWord :call zencoding#expandAbbr(1,"")
-nnoremap <Plug>ZenCodingExpandNormal :call zencoding#expandAbbr(3,"")
+nnoremap <silent> <Plug>SurroundRepeat .
 snoremap <silent> <Del> c
 snoremap <silent> <BS> c
 snoremap <silent> <C-Tab> :call UltiSnips_ListSnippets()
+imap S <Plug>ISurround
+imap s <Plug>Isurround
 inoremap <expr> 	 pumvisible() ? "\" : "\	"
 inoremap <silent> <NL> =UltiSnips_ExpandSnippetOrJump()
 inoremap <silent>  =UltiSnips_JumpBackwards()
-imap A <Plug>ZenCodingAnchorizeSummary
-imap a <Plug>ZenCodingAnchorizeURL
-imap k <Plug>ZenCodingRemoveTag
-imap j <Plug>ZenCodingSplitJoinTagInsert
-imap / <Plug>ZenCodingToggleComment
-imap i <Plug>ZenCodingImageSize
-imap N <Plug>ZenCodingPrev
-imap n <Plug>ZenCodingNext
-imap D <Plug>ZenCodingBalanceTagOutwardInsert
-imap d <Plug>ZenCodingBalanceTagInwardInsert
-imap ; <Plug>ZenCodingExpandWord
-imap , <Plug>ZenCodingExpandAbbr
+imap  <Plug>Isurround
 cmap w!! %!sudo tee > /dev/null %
 let &cpo=s:cpo_save
 unlet s:cpo_save
 set autoindent
 set background=dark
-set backspace=indent,eol,start
+set backspace=2
 set cindent
 set completefunc=youcompleteme#Complete
 set completeopt=preview,menuone
+set cpoptions=aAceFsB
 set noequalalways
 set expandtab
 set fileencodings=ucs-bom,utf-8,default,latin1
 set helplang=en
 set hidden
 set ignorecase
-set printoptions=paper:letter
-set ruler
-set runtimepath=~/.vim/bundle/vundle,~/.vim/bundle/YouCompleteMe,~/.vim/bundle/ultisnips,~/.vim/bundle/SyntaxComplete,~/.vim/bundle/html5.vim,~/.vim/bundle/vim-javascript,~/.vim/bundle/vim-colorschemes,~/.vim/bundle/delimitMate,~/.vim/bundle/zencoding-vim,~/.vim/bundle/minibufexpl.vim,~/.vim/bundle/nerdtree,~/.vim,/var/lib/vim/addons,/usr/share/vim/vimfiles,/usr/share/vim/vim73,/usr/share/vim/vimfiles/after,/var/lib/vim/addons/after,~/.vim/after,~/.vim/bundle/vundle/,~/.vim/bundle/vundle/after,~/.vim/bundle/YouCompleteMe/after,~/.vim/bundle/ultisnips/after,~/.vim/bundle/SyntaxComplete/after,~/.vim/bundle/html5.vim/after,~/.vim/bundle/vim-javascript/after,~/.vim/bundle/vim-colorschemes/after,~/.vim/bundle/delimitMate/after,~/.vim/bundle/zencoding-vim/after,~/.vim/bundle/minibufexpl.vim/after,~/.vim/bundle/nerdtree/after
+set runtimepath=~/.vim/bundle/vundle,~/.vim/bundle/YouCompleteMe,~/.vim/bundle/ultisnips,~/.vim/bundle/SyntaxComplete,~/.vim/bundle/html5.vim,~/.vim/bundle/vim-javascript,~/.vim/bundle/vim-colorschemes,~/.vim/bundle/delimitMate,~/.vim/bundle/zencoding-vim,~/.vim/bundle/minibufexpl.vim,~/.vim/bundle/nerdtree,~/.vim/bundle/vim-matchit,~/.vim/bundle/vim-surround,~/.vim,/usr/share/vim/vimfiles,/usr/share/vim/vim74,/usr/share/vim/vimfiles/after,~/.vim/after,~/.vim/bundle/vundle/,~/.vim/bundle/vundle/after,~/.vim/bundle/YouCompleteMe/after,~/.vim/bundle/ultisnips/after,~/.vim/bundle/SyntaxComplete/after,~/.vim/bundle/html5.vim/after,~/.vim/bundle/vim-javascript/after,~/.vim/bundle/vim-colorschemes/after,~/.vim/bundle/delimitMate/after,~/.vim/bundle/zencoding-vim/after,~/.vim/bundle/minibufexpl.vim/after,~/.vim/bundle/nerdtree/after,~/.vim/bundle/vim-matchit/after,~/.vim/bundle/vim-surround/after
 set shiftwidth=4
 set smartcase
 set softtabstop=4
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set splitbelow
+set splitright
 set tabstop=4
 set updatetime=2000
 set wildmenu
@@ -143,38 +121,49 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +0 content.js
-badd +0 eventPage.js
-badd +0 popup.js
-badd +0 manifest.json
-badd +0 popup.html
-args content.js eventPage.js popup.js manifest.json popup.html
+badd +1 content.js
+badd +1 eventPage.js
+badd +1 manifest.json
+badd +19 popup.html
+badd +124 popup.js
+args content.js eventPage.js manifest.json popup.html popup.js TODO.md README.md
 edit content.js
 set splitbelow splitright
 wincmd _ | wincmd |
 split
 1wincmd k
 wincmd w
-set nosplitbelow
-set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe '1resize ' . ((&lines * 1 + 26) / 53)
-exe '2resize ' . ((&lines * 49 + 26) / 53)
+exe '1resize ' . ((&lines * 1 + 21) / 42)
+exe '2resize ' . ((&lines * 38 + 21) / 42)
 argglobal
 enew
 file -MiniBufExplorer-
 let s:cpo_save=&cpo
 set cpo&vim
-nnoremap <buffer> 	 :call search('\[[0-9]*:[^\]]*\]'):<BS>
+inoremap <buffer> <Plug>delimitMateJumpMany =delimitMate#JumpMany()
+imap <buffer> <S-BS> <Plug>delimitMateS-BS
+imap <buffer> <BS> <Plug>delimitMateBS
 nnoremap <buffer> h :call search('\[[0-9]*:[^\]]*\]','b'):<BS>
 nnoremap <buffer> j gj
 nnoremap <buffer> k gk
 nnoremap <buffer> l :call search('\[[0-9]*:[^\]]*\]'):<BS>
-nnoremap <buffer> p :wincmd p:<BS>
-nnoremap <buffer> <S-Tab> :call search('\[[0-9]*:[^\]]*\]','b'):<BS>
-nnoremap <buffer> <Up> gk
+nnoremap <buffer> <Left> :call search('\[[0-9]*:[^\]]*\]','b'):<BS>
+nnoremap <buffer> <Right> :call search('\[[0-9]*:[^\]]*\]'):<BS>
 nnoremap <buffer> <Down> gj
+nnoremap <buffer> <Up> gk
+imap <buffer> <silent> g <Plug>delimitMateJumpMany
+imap <buffer>  <Plug>delimitMateCR
+imap <buffer> " <Plug>delimitMate"
+imap <buffer> ' <Plug>delimitMate'
+imap <buffer> ( <Plug>delimitMate(
+imap <buffer> ) <Plug>delimitMate)
+imap <buffer> [ <Plug>delimitMate[
+imap <buffer> ] <Plug>delimitMate]
+imap <buffer> ` <Plug>delimitMate`
+imap <buffer> { <Plug>delimitMate{
+imap <buffer> } <Plug>delimitMate}
 let &cpo=s:cpo_save
 unlet s:cpo_save
 setlocal keymap=
@@ -207,8 +196,8 @@ setlocal nodiff
 setlocal equalprg=
 setlocal errorformat=
 setlocal expandtab
-if &filetype != ''
-setlocal filetype=
+if &filetype != 'minibufexpl'
+setlocal filetype=minibufexpl
 endif
 setlocal foldcolumn=0
 setlocal foldenable
@@ -262,12 +251,12 @@ setlocal nospell
 setlocal spellcapcheck=[.?!]\\_[\\])'\"\	\ ]\\+
 setlocal spellfile=
 setlocal spelllang=en
-setlocal statusline=%!g:statusLineText
+setlocal statusline=-MiniBufExplorer-
 setlocal suffixesadd=
 setlocal noswapfile
 setlocal synmaxcol=3000
-if &syntax != ''
-setlocal syntax=
+if &syntax != 'minibufexpl'
+setlocal syntax=minibufexpl
 endif
 setlocal tabstop=4
 setlocal tags=
@@ -283,38 +272,12 @@ wincmd w
 argglobal
 let s:cpo_save=&cpo
 set cpo&vim
-imap <buffer> <RightMouse> <Plug>delimitMateMRightMouse
-imap <buffer> <LeftMouse> <Plug>delimitMateMLeftMouse
-imap <buffer> <S-Up> <Plug>delimitMateS-Up
-imap <buffer> <S-Down> <Plug>delimitMateS-Down
-imap <buffer> <PageDown> <Plug>delimitMatePageDown
-imap <buffer> <PageUp> <Plug>delimitMatePageUp
-imap <buffer> <Down> <Plug>delimitMateDown
-imap <buffer> <Up> <Plug>delimitMateUp
-imap <buffer> <C-Right> <Plug>delimitMateC-Right
-imap <buffer> <C-Left> <Plug>delimitMateC-Left
-imap <buffer> <End> <Plug>delimitMateEnd
-imap <buffer> <Home> <Plug>delimitMateHome
-imap <buffer> <Right> <Plug>delimitMateRight
-imap <buffer> <Left> <Plug>delimitMateLeft
-imap <buffer> <Del> <Plug>delimitMateDel
 imap <buffer> <S-Tab> <Plug>delimitMateS-Tab
 imap <buffer> <S-BS> <Plug>delimitMateS-BS
 imap <buffer> <BS> <Plug>delimitMateBS
-inoremap <buffer> <Plug>delimitMateJumpMany =len(b:_l_delimitMate_buffer) ? delimitMate#Finish(0) : delimitMate#JumpMany()
-imap <buffer> <C-ScrollWheelRight> <Plug>delimitMateC-ScrollWheelRight
-imap <buffer> <S-ScrollWheelRight> <Plug>delimitMateS-ScrollWheelRight
-imap <buffer> <ScrollWheelRight> <Plug>delimitMateScrollWheelRight
-imap <buffer> <C-ScrollWheelLeft> <Plug>delimitMateC-ScrollWheelLeft
-imap <buffer> <S-ScrollWheelLeft> <Plug>delimitMateS-ScrollWheelLeft
-imap <buffer> <ScrollWheelLeft> <Plug>delimitMateScrollWheelLeft
-imap <buffer> <C-ScrollWheelDown> <Plug>delimitMateC-ScrollWheelDown
-imap <buffer> <S-ScrollWheelDown> <Plug>delimitMateS-ScrollWheelDown
-imap <buffer> <ScrollWheelDown> <Plug>delimitMateScrollWheelDown
-imap <buffer> <C-ScrollWheelUp> <Plug>delimitMateC-ScrollWheelUp
-imap <buffer> <S-ScrollWheelUp> <Plug>delimitMateS-ScrollWheelUp
-imap <buffer> <ScrollWheelUp> <Plug>delimitMateScrollWheelUp
+inoremap <buffer> <Plug>delimitMateJumpMany =delimitMate#JumpMany()
 imap <buffer> <silent> g <Plug>delimitMateJumpMany
+imap <buffer>  <Plug>delimitMateCR
 imap <buffer> " <Plug>delimitMate"
 imap <buffer> ' <Plug>delimitMate'
 imap <buffer> ( <Plug>delimitMate(
@@ -429,16 +392,16 @@ set nowrap
 setlocal nowrap
 setlocal wrapmargin=0
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 24) / 49)
+let s:l = 10 - ((9 * winheight(0) + 19) / 38)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+10
+normal! 034|
 wincmd w
 2wincmd w
-exe '1resize ' . ((&lines * 1 + 26) / 53)
-exe '2resize ' . ((&lines * 49 + 26) / 53)
+exe '1resize ' . ((&lines * 1 + 21) / 42)
+exe '2resize ' . ((&lines * 38 + 21) / 42)
 tabnext 1
 if exists('s:wipebuf')
   silent exe 'bwipe ' . s:wipebuf

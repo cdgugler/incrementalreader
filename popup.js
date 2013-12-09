@@ -1,7 +1,10 @@
-var readLater = document.querySelector('button.readlater-btn');
-var readingList = document.querySelector('ul.reading-list');
+var iReader = iReader || {};
 
-var toRead = [];
+iReader.popup = {};
+iReader.popup.readLaterBtn = document.querySelector('button.readlater-btn'),
+iReader.popup.articleList = document.querySelector('ul.article-list'),
+iReader.popup.articles = [];
+
 var storage = chrome.storage.local;
 
 // notify eventPage when popup closed to clean up list and save
@@ -12,17 +15,17 @@ window.addEventListener("unload", function (event) {
 
 function gogogo() {
     var id = this.parentNode.dataset.id,
-        location = toRead[id].location,
+        location = iReader.popup.articles[id].location,
         url = this.href;
     // send open request to eventPage
-    chrome.extension.sendMessage({action: "openReadItem", location: toRead[id]["location"], url:url }, function(response) {
+    chrome.extension.sendMessage({action: "openArticle", location: iReader.popup.articles[id]["location"], url:url }, function(response) {
         console.log(response);
     });
 }
 // updates local storage 
-function addToRead(toRead) {
+function addToRead(articles) {
     // Save it using the Chrome extension storage API.
-    storage.set({'toRead': toRead}, function() {
+    storage.set({'articles': articles}, function() {
     // Notify that we saved.
     console.log('Saved to Local storage!');
   });
@@ -32,56 +35,51 @@ function removeItem() {
     // parent is LI element
     var parent = this.parentNode;
     parent.innerHTML = '';
-    // var id = parent.dataset.id;
-    // toRead.splice(id, 1);
-    var url = parent.dataset.url,
-        loc = parent.dataset.loc;
-    // remove item by url & loc as those should be unique
-    // removing by id scuffles up the current list on the page
-    for (var i = 0; i < toRead.length; i++) {
-        if (toRead[i].url == url && toRead[i].location == loc) {
+    var url = parent.dataset.url;
+    for (var i = 0; i < iReader.popup.articles.length; i++) {
+        if (iReader.popup.articles[i].url == url) {
             console.log("Found match!");
-            toRead.splice(i, 1);
+            iReader.popup.articles.splice(i, 1);
             break;
         }
     }
-    addToRead(toRead);
+    addToRead(iReader.popup.articles);
     parent.parentNode.removeChild(parent);
 }
 
-function populateList (toRead) {
-    for (var i = 0; i < toRead.length; i++)
+function populateList (articles) {
+    for (var i = 0; i < articles.length; i++)
     {
         var newLi = document.createElement("li");
         var deleteAnchor = document.createElement("a");
         var newAnchor = document.createElement("a");
-        var newText = document.createTextNode(toRead[i].title);
+        var newText = document.createTextNode(articles[i].title);
         var deleteX = document.createTextNode("X");
 
         newAnchor.addEventListener('click', gogogo);
         deleteAnchor.addEventListener('click', removeItem);
         deleteAnchor.href = "#";
         newLi.setAttribute('data-id', i);
-        newLi.setAttribute('data-url', toRead[i].url);
-        newLi.setAttribute('data-loc', toRead[i].location);
-        newAnchor.href = toRead[i].url;
+        newLi.setAttribute('data-url', articles[i].url);
+        newLi.setAttribute('data-loc', articles[i].location);
+        newAnchor.href = articles[i].url;
         deleteAnchor.className = "remove-item";
 
         newAnchor.appendChild(newText);
         deleteAnchor.appendChild(deleteX);
         newLi.appendChild(deleteAnchor);
         newLi.appendChild(newAnchor);
-        readingList.appendChild(newLi);
+        iReader.popup.articleList.appendChild(newLi);
     }
 }
 
-storage.get('toRead', function(items) {
-  console.log(items.toRead);
-  if (items.toRead) {
-      toRead = items.toRead;
-      populateList(toRead);
+storage.get('articles', function(items) {
+  console.log(items.articles);
+  if (items.articles) {
+      iReader.popup.articles = items.articles;
+      populateList(iReader.popup.articles);
   } else {
-      toRead = [];
+      iReader.popup.articles = [];
   }
 });
 
@@ -105,8 +103,8 @@ var addPage = function (toReadList) {
 
             var newToRead = { url: url, title: title, location: response.location }
             console.log(newToRead);
-            toRead.push(newToRead);
-            addToRead(toRead);
+            iReader.popup.articles.push(newToRead);
+            addToRead(iReader.popup.articles);
 
 
             var newItem = document.createElement("li");
@@ -119,7 +117,7 @@ var addPage = function (toReadList) {
             deleteAnchor.addEventListener('click', removeItem);
             
             deleteAnchor.href = "#";
-            newItem.setAttribute('data-id', toRead.length-1);
+            newItem.setAttribute('data-id', iReader.popup.articles.length-1);
             newAnchor.href = url;
             deleteAnchor.className = "remove-item";
 
@@ -127,7 +125,7 @@ var addPage = function (toReadList) {
             deleteAnchor.appendChild(deleteX);
             newItem.appendChild(deleteAnchor);
             newItem.appendChild(newAnchor);
-            readingList.appendChild(newItem);
+            iReader.popup.articleList.appendChild(newItem);
         });
 
     });
@@ -135,4 +133,4 @@ var addPage = function (toReadList) {
 };
 
 
-readLater.addEventListener('click', addPage);
+iReader.popup.readLaterBtn.addEventListener('click', addPage);

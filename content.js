@@ -3,6 +3,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action == "reqLoc") {
         var location = window.pageYOffset || document.documentElement.scrollTop;
         sendResponse({location: location});
+
     } else if (request.action == "scroll") {
         // handle request to scroll document window
         if(request.location)
@@ -12,6 +13,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         } else {
             console.log("No location found?");
         }
+
     } else if (request.action == "getSelection") {
 
         // DOM METHOD

@@ -1,0 +1,26 @@
+body {
+    font-family: Helvetica, Arial;
+    min-width: 400px;
+    overflow-x: hidden;
+}
+ul, li {
+list-style-type: none;
+padding-left: 0;
+}
+h1 {
+    font-size: 16px;
+}
+.remove-item {
+    font-size: 1.2em;
+    font-weight: 900;
+    padding-right: 1em;
+    text-decoration: none;
+    color: #444;
+}
+a:link.remove-item, a:visited.remove-item {
+    color: #444;
+    text-decoration: none;
+}
+a:hover.remove-item {
+    color: red;
+}
