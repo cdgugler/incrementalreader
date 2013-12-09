@@ -16,10 +16,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     }
 });
 
-// context menu to save selections
-iReader.highlighter = chrome.contextMenus.create( { "title": "Highlight Text",
-                                                "contexts": ["selection"],
-                                                "onclick": iReader.highlightText } );
 // array of {}  (url, title, location)
 // list of items to read later
 iReader.articles = [];
@@ -30,6 +26,7 @@ iReader.toScroll = [];
 
 // tell content script to handle highlight
 iReader.highlightText = function (info, tab) {
+    console.log('SELECTED!');
     chrome.tabs.sendMessage(tab.id, { action: "getSelection"});
 }
 
@@ -60,3 +57,7 @@ iReader.scrollArticle = function (tabId) {
         }
     }
 }
+// context menu to save selections
+iReader.highlighter = chrome.contextMenus.create( { "title": "Highlight Text",
+                                                "contexts": ["selection"],
+                                                "onclick": iReader.highlightText } );
