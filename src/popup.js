@@ -34,7 +34,7 @@ iReader.saveArticles = function (articles) {
   });
 }
 
-// removes item from popup.html & local storage
+// removes item from view & local storage
 iReader.removeArticle = function () {
     // parent is LI element
     var parent = this.parentNode;
@@ -119,6 +119,5 @@ iReader.addArticle = function () {
     });
 
 };
-
 
 iReader.readLaterBtn.addEventListener('click', iReader.addArticle);
