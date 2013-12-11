@@ -74,7 +74,7 @@ function highlightNode(textNodes, start, end) {
     var numNodes = end + 1 - start;
     for (var i = 0; i < numNodes; i++) {
         // create span node element to wrap text node
-        var newNode = document.createElement('span');
+        var newNode = document.createElement('mark');
         newNode.style.backgroundColor = "yellow";
         var insertElement = textNodes[i].parentNode.insertBefore(newNode, textNodes[i]);
         // move splitNode into (as child of ) insertElement ( which is newNode )
