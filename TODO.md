@@ -1,6 +1,10 @@
 TODO
 ====
 
+save notes to local storage
+email page including notes
+view of pages + notes -> template
+
 ### Add tests for existing code, refactor
 
 <del>### Restructure Code</del>
