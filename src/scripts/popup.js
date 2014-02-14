@@ -1,5 +1,6 @@
 var iReader = iReader || {};
 
+// popup btn and list should move under iReader.popup
 iReader.readLaterBtn = document.querySelector('button.readlater-btn'),
 iReader.articleUl = document.querySelector('ul.article-list'),
 iReader.articles = [];
